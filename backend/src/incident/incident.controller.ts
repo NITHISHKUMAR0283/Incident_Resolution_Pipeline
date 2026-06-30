@@ -1,5 +1,6 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post , Body } from '@nestjs/common';
 import { IncidentService } from './incident.service';
+import {CreateIncidentDto} from './dto/create-incident.dto';
 
 @Controller('incident')
 export class IncidentController {
@@ -7,8 +8,8 @@ export class IncidentController {
     constructor(private readonly incidentService : IncidentService){}
 
     @Post()
-    handlePostIncident(){
-        return this.incidentService.create()
+    handlePostIncident(@Body() createIncidentDto : CreateIncidentDto){
+        return this.incidentService.create(createIncidentDto)
     }
 
 }
