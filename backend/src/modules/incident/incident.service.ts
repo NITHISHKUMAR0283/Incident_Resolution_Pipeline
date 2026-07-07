@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateIncidentDto } from './dto/create-incident.dto';
+import { UpdateIncidentDto } from './dto/update_status.dto';
 
 @Injectable()
 export class IncidentService {
@@ -8,5 +9,10 @@ export class IncidentService {
             message:"incident received",
             processedData:data
         };
+  }
+  UpdateStatus(id:string,body:UpdateIncidentDto){
+    return {
+        message:`incident updated the string status ${id}` 
+    }
   }
 }
