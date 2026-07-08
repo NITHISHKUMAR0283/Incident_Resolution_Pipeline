@@ -8,6 +8,13 @@ datasource db {
   provider = "postgresql"
 }
 
+enum IncidentStatus{
+  RECEIVED
+  IN_PROGRESS
+  RESOLVED
+  FAILED
+}
+
 model Incident {
   id String @id @default(uuid())
   repository String
@@ -17,7 +24,7 @@ model Incident {
   file String
   line Int 
   environment String
-  status String @default("RECEIVED")
+  status IncidentStatus @default(RECEIVED)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
