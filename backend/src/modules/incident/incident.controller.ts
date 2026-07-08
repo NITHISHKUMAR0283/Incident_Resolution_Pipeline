@@ -1,4 +1,4 @@
-import { Controller, Post , Body, Patch, Param } from '@nestjs/common';
+import { Controller, Post , Body, Patch, Param ,Delete , Get, Query} from '@nestjs/common';
 import { IncidentService } from './incident.service';
 import {CreateIncidentDto} from './dto/create-incident.dto';
 import { UpdateIncidentDto } from './dto/update_status.dto';
@@ -15,6 +15,17 @@ export class IncidentController {
     @Patch(":id/status")
     handleUpdateStatus(@Param('id')id :string ,@Body() updatedto :UpdateIncidentDto){
         return this.incidentService.UpdateStatus(id,updatedto)
+    }
+    @Delete(":id")
+    handleDeleteIncident(@Param("id")id:string ){
+        return this.incidentService.deleteIncident(id);
+    }
+    @Get("/fetchall")
+    getIncident(
+        @Query() query:{pageno?:number;limit?:number }){
+            const PageNo = Number(query.pageno??1)-1;
+            const size = Number(query.limit??10);            
+            return this.incidentService.getAllIncidnet(PageNo,size)
     }
 
 }
