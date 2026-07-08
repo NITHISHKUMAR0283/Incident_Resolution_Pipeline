@@ -37,7 +37,7 @@ export class IncidentService {
             message:"deletion successfull"
         }
     }
-    async getAllIncidnet(PageNo:number , size:number){
+    async getAllIncidnet(PageNo:number , size:number,status:string,severity:string){
         const Data= await this.prisma.incident.findMany({
             skip:PageNo*size,
             take:size
