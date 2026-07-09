@@ -2,7 +2,7 @@ import { Controller, Post , Body, Patch, Param ,Delete , Get, Query} from '@nest
 import { IncidentService } from './incident.service';
 import {CreateIncidentDto} from './dto/create-incident.dto';
 import { UpdateIncidentDto } from './dto/update_status.dto';
-import {IncidentStatus,Incidentseverity} from '@prisma/client'
+import {IncidentStatus,Incidentseverity} from '@prisma/client';
 
 @Controller('incident')
 export class IncidentController {
@@ -23,12 +23,12 @@ export class IncidentController {
     }
     @Get("/fetchall")
     getIncident(
-        @Query() query:{pageno?:number;limit?:number;status?:string;severity:string }){
+        @Query() query:{pageno?:number;limit?:number;status?:string;severity?:string }){
             const PageNo = Number(query.pageno??1)-1;
             const size = Number(query.limit??10);  
-            const status  = query.status ?query.status as IncidentStatus :undefined;
-            const severity = query.severity ?query.severity as Incidentseverity: undefined;          
-            return this.incidentService.getAllIncidnet(PageNo,size,status,severity)
+            const In_status  = query.status ?query.status as IncidentStatus :undefined;
+            const In_severity = query.severity ?query.severity as Incidentseverity: undefined;          
+            return this.incidentService.getAllIncidnet(PageNo,size,In_status,In_severity)
     }
 
 }

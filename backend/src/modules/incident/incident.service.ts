@@ -3,6 +3,7 @@ import { CreateIncidentDto } from './dto/create-incident.dto';
 import { UpdateIncidentDto } from './dto/update_status.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { skip } from 'node_modules/rxjs/dist/types';
+import {IncidentStatus,Incidentseverity} from '@prisma/client'
 
 @Injectable()
 export class IncidentService {
@@ -19,7 +20,7 @@ export class IncidentService {
             where:{id:String(id)}
             ,
             data:{
-                status:body.status
+                status:body.status as IncidentStatus
             }
         })
         return {
@@ -37,10 +38,15 @@ export class IncidentService {
             message:"deletion successfull"
         }
     }
-    async getAllIncidnet(PageNo:number , size:number,status:string,severity:string){
+    async getAllIncidnet(PageNo:number , size:number,status?:IncidentStatus,severity?:Incidentseverity){
         const Data= await this.prisma.incident.findMany({
+            where:{
+                status:status,
+                severity:severity
+            },
             skip:PageNo*size,
             take:size
+        
         })
         return {
             data:Data,
