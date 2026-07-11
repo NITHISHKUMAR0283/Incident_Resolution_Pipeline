@@ -1,0 +1,1 @@
+export const INCIDENT_QUEUE = 'incident-queue'

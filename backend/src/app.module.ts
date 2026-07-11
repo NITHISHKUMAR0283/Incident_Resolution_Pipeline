@@ -8,6 +8,7 @@ import { ConfigModule} from '@nestjs/config';
 import { OnApplicationBootstrap } from '@nestjs/common';
 import {BullModule} from '@nestjs/bullmq'
 import { Queue} from 'bullmq'
+import { QueueModule } from './modules/queue/queue.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { Queue} from 'bullmq'
       }
     }),
 
-    IncidentModule,HealthModule, PrismaModule],
+    IncidentModule,HealthModule, PrismaModule, QueueModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateIncidentDto } from './dto/create-incident.dto';
 import { UpdateIncidentDto } from './dto/update_status.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { skip } from 'node_modules/rxjs/dist/types';
 import {IncidentStatus,Incidentseverity} from '@prisma/client'
+import { InjectQueue } from '@nestjs/bullmq';
 
 @Injectable()
 export class IncidentService {
