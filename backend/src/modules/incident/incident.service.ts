@@ -3,17 +3,27 @@ import { CreateIncidentDto } from './dto/create-incident.dto';
 import { UpdateIncidentDto } from './dto/update_status.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {IncidentStatus,Incidentseverity} from '@prisma/client'
+import { Queue } from 'bullmq';
 import { InjectQueue } from '@nestjs/bullmq';
+import {INCIDENT_QUEUE} from '../queue/incident.queue'
 
 @Injectable()
 export class IncidentService {
-    constructor (private readonly prisma :PrismaService){}
+    constructor (
+        private readonly prisma :PrismaService,
+        @InjectQueue(INCIDENT_QUEUE)private readonly incidentqueue : Queue){}
+
     async create(data:CreateIncidentDto){
-        const newIncident = await this.prisma.incident.create({data});
-        return {
-            Incident :newIncident,
-            message:"created Successfully"
+        
+        const job = await this.incidentqueue.add('create_incident',data,{
+            attempts:3,
+            backoff:{
+                type:'exponential',
+                delay:2000
         }
+        });
+
+        return `addded job ${job.id}`
      }
     async UpdateStatus(id:string,body:UpdateIncidentDto){
         const updatedIncident = await this.prisma.incident.update({
