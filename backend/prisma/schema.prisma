@@ -10,10 +10,11 @@ datasource db {
 
 enum IncidentStatus{
   RECEIVED
-  PROCESSING
-  AI_ANALYZING
+  QUEUED
+  COLLECTING_CONTEXT
+  ANALYZING
   VALIDATING
-  PR_CREATED
+  READY
   FAILED
   COMPLETED
 }
@@ -41,5 +42,19 @@ model Incident {
   assignedTo String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  errorMessage String?
+  retryCount Int?
+  queuedAt DateTime?
+  histories IncidentHistory[]
+}
+model IncidentHistory{
+  id String @id @default(uuid())
+  incidentId String 
+  stage IncidentStatus
+  message String?
+  startedAt DateTime?
+  completedAt DateTime?
+  createdAt DateTime? @default(now())
+  incident Incident @relation(fields:[incidentId],references:[id],onDelete:Cascade)
 
 }

@@ -6,6 +6,7 @@ import {IncidentStatus,Incidentseverity} from '@prisma/client'
 import { Queue } from 'bullmq';
 import { InjectQueue } from '@nestjs/bullmq';
 import {INCIDENT_QUEUE} from '../queue/incident.queue'
+import { Pipeline_service } from './pipeline/pipeline.service';
 
 @Injectable()
 export class IncidentService {
@@ -22,6 +23,7 @@ export class IncidentService {
                 delay:2000
         }
         });
+        
 
         return `addded job ${job.id}`
      }

@@ -2,6 +2,7 @@ import { InjectQueue, Processor, WorkerHost } from "@nestjs/bullmq"
 import {INCIDENT_QUEUE} from '../queue/incident.queue'
 import { Job} from "bullmq"
 import { error } from "console";
+import { Pipeline_service } from "./pipeline/pipeline.service";
 
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -11,7 +12,9 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 
 export class incidentprocessor extends WorkerHost{
-    
+    constructor(private readonly pipeline :Pipeline_service){
+        super();
+    };
     async process(job: Job<any,any,string>): Promise<any> {
         
         switch(job.name){
@@ -25,6 +28,8 @@ export class incidentprocessor extends WorkerHost{
                 }
 
                 await delay(3000);
+                
+                await this.pipeline.IncidentPipeline();
                 console.log("processed successfully")
                 return "created successfully";
 
