@@ -10,6 +10,7 @@ import {BullModule} from '@nestjs/bullmq'
 import { Queue} from 'bullmq'
 import { QueueModule } from './modules/queue/queue.module';
 import { GithubModule } from './modules/github/github.module';
+import { ParserModule } from './modules/parser/parser.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,7 +24,7 @@ import { GithubModule } from './modules/github/github.module';
       }
     }),
 
-    IncidentModule,HealthModule, PrismaModule, QueueModule,GithubModule],
+    IncidentModule,HealthModule, PrismaModule, QueueModule,GithubModule, ParserModule],
   controllers: [AppController],
   providers: [AppService],
 })

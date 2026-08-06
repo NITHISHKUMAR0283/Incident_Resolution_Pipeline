@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, InternalServerErrorException } f
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { promises } from 'dns';
-import { OnModuleInit } from '@nestjs/common';
+import path from 'path';
 
 @Injectable()
 export class GithubService {
@@ -30,23 +30,25 @@ export class GithubService {
             )
         }
     }
-    async onModuleInit(){
+    async getFileContent( owner :string , repo :string , path:string, branch:string):Promise<any>{
         try{
-        const data = await this.getrepository(
-            "NITHISHKUMAR0283","handwritten_digit_recognizer_CNN"
-        )
-        console.log({
-      name: data.name,
-      default_branch: data.default_branch,
-      private: data.private,
-      clone_url: data.clone_url,
-      updated_at: data.updated_at
-    });
-
+            const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`
+            const response = await firstValueFrom(this.httpservice.get(url,{
+                headers:{
+                    'Accept':"application/vnd.github.raw+json",
+                    'User-Agent':"Nestjs-App"
+                }
+            }));
+            const code = response.data
+                .split('\n')
+                .map((line:string, index:number) => `${index + 1}: ${line}`);
+        return code;
+        }
+        catch(err:any){
+            throw new  HttpException(
+                err.response?.data?.message || 'Failed to fetch',err.status || HttpStatus.INTERNAL_SERVER_ERROR
+            )
+        }
     }
-    catch(err:any){
-        console.log(err.message);
-    }
 
-}
 };
