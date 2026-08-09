@@ -2,7 +2,7 @@ import { GithubService } from "./github.service"
 import { Injectable, OnModuleInit } from "@nestjs/common";
 
 @Injectable()
-export class contextExtractor implements OnModuleInit{
+export class contextExtractor {
     constructor(private readonly githubservice:GithubService,){};
     
     async extractContext(line:number,radius:number){
@@ -22,8 +22,5 @@ export class contextExtractor implements OnModuleInit{
     
             }
         
-    async onModuleInit(){
-        const extracted =await this.extractContext(10,4);
-        console.log(extracted);
-    }
+  
         }
