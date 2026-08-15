@@ -11,6 +11,7 @@ export class contextExtractor {
             const code :string[]= await this.githubservice.getFileContent(
                  "NITHISHKUMAR0283","handwritten_digit_recognizer_CNN","src/CNN.py","main"
             );
+
             let start = Math.max(0,line-radius);
             let end = Math.min(code.length,line+radius);
             return code.slice(start,end);

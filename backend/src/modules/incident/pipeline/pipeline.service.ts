@@ -3,19 +3,20 @@ import { Incident_analyser } from "./analyzer.service";
 import { Incident_validator } from "./validator.service";
 import { Incident_context } from "./contest_collector.service";
 
+
 @Injectable()
 export class Pipeline_service {
     private readonly logger = new Logger(Pipeline_service.name);
     constructor (
                 private readonly context:Incident_context,
                 private readonly analyse:Incident_analyser,
-                private readonly validate :Incident_validator
+                private readonly validate :Incident_validator,
+                
     ){};
 
-    async IncidentPipeline(){
+    async IncidentPipeline(data:any){
     try{
-        await this.context.collect_context();
-
+        let context = await this.context.collect_context(data);
         await this.analyse.analyser();
         
         await this.validate.validate();

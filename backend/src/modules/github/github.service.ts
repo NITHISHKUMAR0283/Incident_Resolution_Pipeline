@@ -40,8 +40,6 @@ export class GithubService {
                 }
             }));
             const code = response.data
-                .split('\n')
-                .map((line:string, index:number) => `${index + 1}: ${line}`);
         return code;
         }
         catch(err:any){

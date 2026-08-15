@@ -21,6 +21,7 @@ export class incidentprocessor extends WorkerHost{
             case 'create_incident':
                 console.log(`processing job id ${job.id} on attempt ${job.attemptsMade}`);
                 const prob_fail = Math.random()<0.5;
+                const incidentdata = job.data;
 
                 if(prob_fail){
                     console.error(`Failed to process job id ${job.id} on attempt ${job.attemptsMade}`);
@@ -29,7 +30,7 @@ export class incidentprocessor extends WorkerHost{
 
                 await delay(3000);
                 
-                await this.pipeline.IncidentPipeline();
+                await this.pipeline.IncidentPipeline(incidentdata);
                 console.log("processed successfully")
                 return "created successfully";
 

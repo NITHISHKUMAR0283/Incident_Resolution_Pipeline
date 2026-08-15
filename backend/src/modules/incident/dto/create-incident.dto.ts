@@ -7,7 +7,9 @@ export enum EnvironmentStatus{
     DEVELOPMENT = 'development'
 }
 export class CreateIncidentDto {
-    
+    @IsString()
+    @IsNotEmpty()
+    owner:string;
     @IsString()
     @IsNotEmpty()
     repository:string;

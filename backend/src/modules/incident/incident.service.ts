@@ -5,8 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import {IncidentStatus,Incidentseverity} from '@prisma/client'
 import { Queue } from 'bullmq';
 import { InjectQueue } from '@nestjs/bullmq';
-import {INCIDENT_QUEUE} from '../queue/incident.queue'
-import { Pipeline_service } from './pipeline/pipeline.service';
+import {INCIDENT_QUEUE} from '../queue/incident.queue';
 
 @Injectable()
 export class IncidentService {

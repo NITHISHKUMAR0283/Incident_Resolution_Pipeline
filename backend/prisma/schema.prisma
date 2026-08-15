@@ -28,6 +28,7 @@ enum Incidentseverity{
 model Incident {
   id String @id @default(uuid())
   repository String
+  owner String @default("unknown")
   branch String
   commitSha String
   exception String

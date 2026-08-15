@@ -5,6 +5,7 @@ import { contextExtractor } from './context-extractor.service';
 
 @Module({
   imports :[HttpModule],
-  providers:[GithubService,contextExtractor]
+  providers:[GithubService,contextExtractor],
+  exports:[GithubService]
 })
 export class GithubModule {}
