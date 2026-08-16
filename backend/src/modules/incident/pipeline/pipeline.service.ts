@@ -17,8 +17,8 @@ export class Pipeline_service {
     async IncidentPipeline(data:any){
     try{
         let context = await this.context.collect_context(data);
-        await this.analyse.analyser();
-        
+        let analysis =  await this.analyse.Analyse(context);
+        console.log(analysis);
         await this.validate.validate();
 
 

@@ -23,9 +23,8 @@ export class Incident_context{
         (context as any).exception = data.exception ;
         (context as any).error_line = data.line;
         (context as any).branch = data.branch;
-        console.log(context)
 
-        Logger.log("collect_context successfull","Incident_context");
+        Logger.log("collect_context successfull",context);
         return context;
     }
 }
